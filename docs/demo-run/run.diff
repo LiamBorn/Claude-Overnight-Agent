@@ -1,0 +1,149 @@
+diff --git a/README.md b/README.md
+index 04fe482..6b0cc80 100644
+--- a/README.md
++++ b/README.md
+@@ -9,6 +9,19 @@ three small modules and a deliberately incomplete test suite.
+ - `src/retry.js` — retry an async function with backoff
+ - `src/format.js` — render a byte count as a human-readable string
+ 
++## Usage
++
++```js
++const { parseDuration } = require('./src/parse-duration');
++parseDuration('2h'); // 7200000 (also supports "ms", "s", "m", "d")
++
++const { retry } = require('./src/retry');
++await retry(() => fetchThing(), { attempts: 5, baseDelayMs: 200 });
++
++const { formatBytes } = require('./src/format');
++formatBytes(1536); // '1.5 KB'
++```
++
+ ## Running the tests
+ 
+ ```bash
+diff --git a/index.js b/index.js
+new file mode 100644
+index 0000000..3dbef3f
+--- /dev/null
++++ b/index.js
+@@ -0,0 +1,7 @@
++'use strict';
++
++const { parseDuration } = require('./src/parse-duration');
++const { retry } = require('./src/retry');
++const { formatBytes } = require('./src/format');
++
++module.exports = { parseDuration, retry, formatBytes };
+diff --git a/src/parse-duration.js b/src/parse-duration.js
+index 5dbd836..86127f0 100644
+--- a/src/parse-duration.js
++++ b/src/parse-duration.js
+@@ -3,13 +3,14 @@
+ /**
+  * Parse a short duration string into milliseconds.
+  *
+- * Supported today: seconds ("30s") and minutes ("5m").
++ * Supported today: milliseconds ("250ms"), seconds ("30s"), minutes ("5m"),
++ * hours ("2h") and days ("1d").
+  */
+ function parseDuration(input) {
+   if (typeof input !== 'string') {
+     throw new TypeError('parseDuration expects a string');
+   }
+-  const match = input.trim().match(/^(\d+)(ms|s|m)$/);
++  const match = input.trim().match(/^(\d+)(ms|s|m|h|d)$/);
+   if (!match) {
+     throw new Error(`Unrecognized duration: ${input}`);
+   }
+@@ -21,6 +22,10 @@ function parseDuration(input) {
+       return amount * 1000;
+     case 'm':
+       return amount * 60 * 1000;
++    case 'h':
++      return amount * 60 * 60 * 1000;
++    case 'd':
++      return amount * 24 * 60 * 60 * 1000;
+     default:
+       throw new Error(`Unrecognized unit: ${match[2]}`);
+   }
+diff --git a/src/retry.js b/src/retry.js
+index 3d0c1b1..e2839f1 100644
+--- a/src/retry.js
++++ b/src/retry.js
+@@ -1,12 +1,30 @@
+ 'use strict';
+ 
++const defaultSleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
++
+ /**
+  * Retry an async function with exponential backoff.
+  *
+- * TODO: not implemented yet. See test/retry.test.js for the intended behaviour.
++ * options.attempts    - max number of tries before giving up (default 3)
++ * options.baseDelayMs - delay before the second attempt; doubles after each
++ *                        subsequent failure (default 100)
++ * options.sleep       - injectable delay function, defaults to a real timer
+  */
+ async function retry(fn, options = {}) {
+-  throw new Error('retry() is not implemented');
++  const { attempts = 3, baseDelayMs = 100, sleep = defaultSleep } = options;
++
++  let lastError;
++  for (let attempt = 0; attempt < attempts; attempt++) {
++    try {
++      return await fn();
++    } catch (err) {
++      lastError = err;
++      if (attempt < attempts - 1) {
++        await sleep(baseDelayMs * 2 ** attempt);
++      }
++    }
++  }
++  throw lastError;
+ }
+ 
+ module.exports = { retry };
+diff --git a/test/format.test.js b/test/format.test.js
+new file mode 100644
+index 0000000..9b325ec
+--- /dev/null
++++ b/test/format.test.js
+@@ -0,0 +1,37 @@
++'use strict';
++
++const test = require('node:test');
++const assert = require('node:assert');
++const { formatBytes } = require('../src/format');
++
++test('formats zero bytes', () => {
++  assert.strictEqual(formatBytes(0), '0 B');
++});
++
++test('formats a value below one kilobyte', () => {
++  assert.strictEqual(formatBytes(500), '500 B');
++});
++
++test('crosses the kilobyte boundary', () => {
++  assert.strictEqual(formatBytes(1024), '1.0 KB');
++});
++
++test('crosses the megabyte boundary', () => {
++  assert.strictEqual(formatBytes(1024 * 1024), '1.0 MB');
++});
++
++test('crosses the gigabyte boundary', () => {
++  assert.strictEqual(formatBytes(1024 * 1024 * 1024), '1.0 GB');
++});
++
++test('honors the decimals argument', () => {
++  assert.strictEqual(formatBytes(1536, 2), '1.50 KB');
++});
++
++test('rejects a non-finite number', () => {
++  assert.throws(() => formatBytes(Infinity), TypeError);
++});
++
++test('rejects a negative number', () => {
++  assert.throws(() => formatBytes(-1), RangeError);
++});

@@ -55,6 +55,14 @@ node ../plugins/overnight-agent/scripts/runner.mjs --repo "$(pwd)" --dry-run
 For a real run, open Claude Code in `sample-repo` and use `/overnight:start`. A genuine run
 of this plan takes about seven minutes and ends at 18 passing tests across 5 commits.
 
+## See a real run
+
+[`docs/demo-run/`](docs/demo-run/) holds the complete, unedited output of one genuine run
+against the fixture: the morning report, the diff, the decision log, and the raw transcripts
+of all eleven headless sessions. The fixture went from 4 passing and 6 failing tests to 18
+passing and 0 failing, across five commits, in seven minutes. The git history is on the
+`demo/fixture-before` and `demo/overnight-2026-09-11` branches.
+
 ## Verify the build
 
 ```bash

@@ -1,0 +1,26 @@
+{
+  "args": [
+    "-p",
+    "The task you must complete is on stdin. Work through it now and finish with the structured result object. Nobody is awake to answer questions.",
+    "--model",
+    "sonnet",
+    "--output-format",
+    "json",
+    "--json-schema",
+    "{\"type\":\"object\",\"properties\":{\"status\":{\"type\":\"string\",\"enum\":[\"completed\",\"partial\",\"blocked\"]},\"summary\":{\"type\":\"string\"},\"assumptions\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"questions\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"files_changed\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}},\"acceptance_run\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"command\":{\"type\":\"string\"},\"exit_code\":{\"type\":\"number\"}},\"required\":[\"command\",\"exit_code\"]}},\"notes\":{\"type\":\"string\"}},\"required\":[\"status\",\"summary\",\"assumptions\",\"questions\",\"files_changed\"]}",
+    "--append-system-prompt-file",
+    "/Users/liamsantos/Claude Overnight Agent/sample-repo/.overnight/worker-system-prompt.md",
+    "--settings",
+    "/Users/liamsantos/Claude Overnight Agent/sample-repo/.overnight/worker-settings.json",
+    "--permission-mode",
+    "acceptEdits",
+    "--max-turns",
+    "120"
+  ],
+  "duration_ms": 46336,
+  "status": 0,
+  "signal": null,
+  "timedOut": false,
+  "stdout": "{\"duration_api_ms\":15539,\"stop_reason\":\"tool_use\",\"session_id\":\"3a5c8e28-4e14-448e-bfd9-4ed5c93fddd1\",\"total_cost_usd\":0.2296254,\"usage\":{\"input_tokens\":8,\"cache_creation_input_tokens\":47251,\"cache_read_input_tokens\":132027,\"output_tokens\":1420,\"output_tokens_details\":{\"thinking_tokens\":9},\"server_tool_use\":{\"web_search_requests\":0,\"web_fetch_requests\":0},\"service_tier\":\"standard\",\"cache_creation\":{\"ephemeral_1h_input_tokens\":47251,\"ephemeral_5m_input_tokens\":0},\"inference_geo\":\"not_available\",\"iterations\":[{\"input_tokens\":2,\"output_tokens\":387,\"cache_read_input_tokens\":46904,\"cache_creation_input_tokens\":347,\"cache_creation\":{\"ephemeral_5m_input_tokens\":0,\"ephemeral_1h_input_tokens\":347},\"type\":\"message\"}],\"speed\":\"standard\"},\"modelUsage\":{\"claude-sonnet-5\":{\"inputTokens\":8,\"outputTokens\":1420,\"cacheReadInputTokens\":132027,\"cacheCreationInputTokens\":47251,\"webSearchRequests\":0,\"costUSD\":0.2296254,\"contextWindow\":1000000,\"maxOutputTokens\":64000,\"canonicalModel\":\"claude-sonnet-5\",\"provider\":\"firstParty\",\"costBasis\":\"list\"}},\"permission_denials\":[],\"terminal_reason\":\"completed\",\"fast_mode_state\":\"off\",\"fast_mode_disabled_reason\":\"sdk_opt_in_required\",\"subagent_stats\":{\"spawned\":0,\"requested\":{\"background\":0,\"foreground\":0,\"unset\":0},\"started_in_background\":0,\"max_depth\":0,\"spawned_by_subagents\":0,\"completed\":0,\"failed\":0,\"killed\":{\"parent\":0,\"user\":0,\"system\":0},\"refused\":{\"depth_limit\":0,\"concurrency_limit\":0,\"budget\":0},\"by_type\":{}},\"is_error\":false,\"num_turns\":6,\"subtype\":\"success\",\"api_error_status\":null,\"result\":\"{\\\"acceptance_run\\\":[{\\\"command\\\":\\\"node --test test/parse-duration.test.js\\\",\\\"exit_code\\\":0}],\\\"status\\\":\\\"completed\\\",\\\"summary\\\":\\\"Extended parseDuration's regex and switch to accept \\\\\\\"h\\\\\\\" (hours) and \\\\\\\"d\\\\\\\" (days) units, converting to milliseconds like the existing units. Invalid-input error behavior is unchanged. All 6 tests in test/parse-duration.test.js pass.\\\",\\\"assumptions\\\":[\\\"Hours and days are integer amounts only (matching the existing \\\\\\\\d+ pattern for all units, no fractional support was requested or tested).\\\",\\\"Doc comment at the top of the file was updated to mention all five supported units, consistent with existing style.\\\"],\\\"questions\\\":[],\\\"files_changed\\\":[\\\"src/parse-duration.js\\\"]}\",\"structured_output\":{\"acceptance_run\":[{\"command\":\"node --test test/parse-duration.test.js\",\"exit_code\":0}],\"status\":\"completed\",\"summary\":\"Extended parseDuration's regex and switch to accept \\\"h\\\" (hours) and \\\"d\\\" (days) units, converting to milliseconds like the existing units. Invalid-input error behavior is unchanged. All 6 tests in test/parse-duration.test.js pass.\",\"assumptions\":[\"Hours and days are integer amounts only (matching the existing \\\\d+ pattern for all units, no fractional support was requested or tested).\",\"Doc comment at the top of the file was updated to mention all five supported units, consistent with existing style.\"],\"questions\":[],\"files_changed\":[\"src/parse-duration.js\"]},\"ttft_ms\":4649,\"type\":\"result\",\"duration_ms\":33115,\"uuid\":\"3630fe55-b268-4924-a646-cf0df018f1f9\",\"ttft_stream_ms\":4299,\"time_to_request_ms\":3196,\"queued_turn_count\":0}\n",
+  "stderr": ""
+}
