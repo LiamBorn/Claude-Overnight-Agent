@@ -14,8 +14,8 @@ independently verified work on a dedicated branch.
 ## Install
 
 ```bash
-claude plugin marketplace add "/Users/liamsantos/Claude Overnight Agent"
-claude plugin install overnight@overnight-local
+claude plugin marketplace add LiamBorn/Claude-Overnight-Agent
+claude plugin install overnight@overnight-agent
 ```
 
 The commands are then `/overnight:plan`, `/overnight:validate`, `/overnight:start`,

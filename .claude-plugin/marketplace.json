@@ -1,10 +1,11 @@
 {
-  "name": "overnight-local",
+  "name": "overnight-agent",
   "owner": {
-    "name": "Liam Santos"
+    "name": "Liam Santos",
+    "url": "https://github.com/LiamBorn"
   },
-  "description": "Local marketplace hosting the Overnight Agent plugin.",
-  "version": "0.1.1",
+  "description": "Marketplace for the Overnight Agent plugin.",
+  "version": "0.2.0",
   "plugins": [
     {
       "name": "overnight",

@@ -26,8 +26,8 @@ design decisions almost everywhere.
 ## Install
 
 ```bash
-claude plugin marketplace add /absolute/path/to/Claude\ Overnight\ Agent
-claude plugin install overnight@overnight-local
+claude plugin marketplace add LiamBorn/Claude-Overnight-Agent
+claude plugin install overnight@overnight-agent
 ```
 
 Then, in Claude Code, `/overnight:plan` is available. Requires Node 18 or newer, git, and a
@@ -44,12 +44,12 @@ this for you with `--probe` before every run, so you find out at bedtime rather 
 To develop against the plugin without installing it, pass `--plugin-dir` to `claude`, or just
 call the scripts directly; the runner works standalone.
 
-When the marketplace source is a local path, as it is here, sessions load the plugin from
-that source directory rather than from the version-pinned copy under
-`~/.claude/plugins/cache/`. Editing a command or a script therefore takes effect in the next
-session with no reinstall. Changes to `hooks/hooks.json` or to the agent files need a
-`/reload-plugins` or a restart, and bumping `version` in both manifests then reinstalling is
-still the honest way to mark a release.
+Installing from GitHub copies the plugin into a version-pinned directory under
+`~/.claude/plugins/cache/`, so edits to a local clone do not affect the installed copy. To
+develop against your own changes, add the clone as a second marketplace with
+`claude plugin marketplace add /path/to/your/clone`; a local-path source loads straight from
+that directory, so command and script edits take effect in the next session. Changes to
+`hooks/hooks.json` or the agent files need `/reload-plugins` or a restart either way.
 
 ---
 
