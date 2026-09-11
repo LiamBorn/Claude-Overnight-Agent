@@ -1,0 +1,19 @@
+{
+  "_comment": [
+    "Copy this to .overnight/config.json in a repository to set defaults for every run there.",
+    "Precedence, highest first: the plan's own ## Settings block, then this file, then the",
+    "plugin's userConfig values, then the built-in defaults in scripts/config.mjs.",
+    "Delete the keys you do not want to override."
+  ],
+  "stop_at": "07:00",
+  "max_tasks": 20,
+  "max_consecutive_failures": 3,
+  "task_timeout_minutes": 45,
+  "model": "sonnet",
+  "reviewer_model": "sonnet",
+  "baseline_command": null,
+  "allow_package_install": false,
+  "allow_network": false,
+  "on_failure": "revert",
+  "narrative_summary": true
+}

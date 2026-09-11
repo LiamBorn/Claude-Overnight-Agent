@@ -1,0 +1,9 @@
+# The fixture is its own git repository. It carries the overnight/<date> branch produced by
+# a real run, which is worth keeping inspectable, and nesting a repo inside this one would
+# commit an unusable gitlink rather than the files. Clone or recreate it separately.
+sample-repo/
+
+# Runtime state an overnight run writes into whatever repo it runs in.
+.overnight/
+
+.DS_Store

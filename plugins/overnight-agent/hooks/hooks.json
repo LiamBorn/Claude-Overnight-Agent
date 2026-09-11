@@ -1,0 +1,25 @@
+{
+  "_comment": [
+    "Registered in every session where this plugin is installed, which is why guard.mjs",
+    "exits immediately unless OVERNIGHT_RUN=1 is in its environment. Only the overnight",
+    "runner sets that variable, so ordinary daytime sessions are completely unaffected.",
+    "",
+    "The matcher covers the tools that can leave the project or reach the outside world.",
+    "Read is deliberately absent: Read deny rules in the settings file already cover it,",
+    "and adding a hook to every file read would slow the session for no extra safety."
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell|Edit|Write|MultiEdit|NotebookEdit|WebFetch|WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/guard.mjs\"",
+            "timeout": 20
+          }
+        ]
+      }
+    ]
+  }
+}

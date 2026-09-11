@@ -1,0 +1,34 @@
+{
+  "name": "overnight-local",
+  "owner": {
+    "name": "Liam Santos"
+  },
+  "description": "Local marketplace hosting the Overnight Agent plugin.",
+  "version": "0.1.1",
+  "plugins": [
+    {
+      "name": "overnight",
+      "displayName": "Overnight Agent",
+      "description": "Hand Claude Code a plan at bedtime and wake up to committed, independently verified work on a dedicated branch.",
+      "source": "./plugins/overnight-agent",
+      "version": "0.1.1",
+      "author": {
+        "name": "Liam Santos"
+      },
+      "license": "MIT",
+      "category": "automation",
+      "keywords": [
+        "overnight",
+        "autonomous",
+        "unattended",
+        "planning",
+        "batch"
+      ],
+      "tags": [
+        "automation",
+        "planning",
+        "safety"
+      ]
+    }
+  ]
+}

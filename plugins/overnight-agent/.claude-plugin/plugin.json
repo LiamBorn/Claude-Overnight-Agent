@@ -1,0 +1,39 @@
+{
+  "name": "overnight",
+  "displayName": "Overnight Agent",
+  "version": "0.1.1",
+  "description": "Write a plan during the day, hand it off at bedtime, and wake up to committed, independently verified work on a dedicated branch.",
+  "author": {
+    "name": "Liam Santos"
+  },
+  "license": "MIT",
+  "keywords": [
+    "overnight",
+    "autonomous",
+    "unattended",
+    "planning",
+    "batch"
+  ],
+  "userConfig": {
+    "default_stop_at": {
+      "type": "string",
+      "title": "Default stop time",
+      "description": "Local wall-clock time the run must end by, as HH:MM. A plan's own setting overrides this.",
+      "default": "07:00"
+    },
+    "default_model": {
+      "type": "string",
+      "title": "Default model for workers",
+      "description": "Model alias used for overnight worker sessions (opus, sonnet, haiku).",
+      "default": "sonnet"
+    },
+    "default_task_timeout_minutes": {
+      "type": "number",
+      "title": "Per-task timeout (minutes)",
+      "description": "Hard wall-clock kill for a single task attempt.",
+      "default": 45,
+      "min": 1,
+      "max": 480
+    }
+  }
+}
