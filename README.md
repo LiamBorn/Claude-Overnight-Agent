@@ -34,15 +34,26 @@ safety model, and troubleshooting.
 
 `sample-repo/` is a small Node project with genuine defects: a duration parser that does not
 understand hours, an unimplemented retry function, a module with no tests, and a README with
-no usage section. Its `OVERNIGHT_PLAN.md` has five tasks that fix all of it.
+no usage section. It starts at 4 passing and 6 failing tests, and its `OVERNIGHT_PLAN.md` has
+five tasks that fix all of it.
+
+**Make it its own repository first.** It ships as plain files, so without this the run would
+branch and commit across this whole repository rather than the fixture. Preflight warns you
+if you skip it.
 
 ```bash
 cd sample-repo
+git init && git add -A && git commit -m "fixture: three modules, an incomplete test suite"
+```
+
+Then walk the plan without changing anything:
+
+```bash
 node ../plugins/overnight-agent/scripts/runner.mjs --repo "$(pwd)" --dry-run
 ```
 
-That walks the plan and changes nothing. For a real run, open Claude Code in `sample-repo`
-and use `/overnight:start`.
+For a real run, open Claude Code in `sample-repo` and use `/overnight:start`. A genuine run
+of this plan takes about seven minutes and ends at 18 passing tests across 5 commits.
 
 ## Verify the build
 

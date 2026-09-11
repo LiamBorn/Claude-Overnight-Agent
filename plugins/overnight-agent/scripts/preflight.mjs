@@ -68,6 +68,18 @@ export function runPreflight({ repoRoot, planFile, probe = false, baseline = fal
   const root = git.repoRootOf(repoRoot) ?? repoRoot;
   add('git repository', PASS, root);
 
+  // Running from a subdirectory of a larger repository is legal but rarely intended: the
+  // branch, the commits and the revert-on-failure all apply to the whole repository, not to
+  // the directory the plan sits in. Say so loudly rather than let it be discovered at 3am.
+  if (path.resolve(root) !== path.resolve(repoRoot)) {
+    add(
+      'repository scope',
+      WARN,
+      `the plan is in ${repoRoot}, but that is a subdirectory of the repository at ${root}. The run will branch, commit and revert across the WHOLE repository, not just this folder.`,
+      `If you meant to work on ${repoRoot} alone, make it its own repository first: cd ${JSON.stringify(repoRoot)} && git init && git add -A && git commit -m "initial".`,
+    );
+  }
+
   if (!git.hasCommits(root)) {
     add('git history', FAIL, 'the repository has no commits yet', 'Make an initial commit so there is something to branch from and revert to.');
   } else {

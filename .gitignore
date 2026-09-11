@@ -1,9 +1,10 @@
-# The fixture is its own git repository. It carries the overnight/<date> branch produced by
-# a real run, which is worth keeping inspectable, and nesting a repo inside this one would
-# commit an unusable gitlink rather than the files. Clone or recreate it separately.
-sample-repo/
+# The completed demo run: sample-repo-demo-run/ is its own git repository holding the
+# overnight/<date> branch produced by a real run, kept for inspection. A repository nested
+# inside this one would commit an unusable gitlink rather than files, so it stays out.
+# The pristine fixture ships at sample-repo/ instead.
+sample-repo-demo-run/
 
-# Runtime state an overnight run writes into whatever repo it runs in.
+# Runtime state an overnight run writes into whatever repository it runs in.
 .overnight/
 
 .DS_Store
