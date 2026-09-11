@@ -5,6 +5,6 @@
   "description": "A tiny fixture project with real, fixable defects, used to exercise the overnight-agent plugin end to end.",
   "main": "index.js",
   "scripts": {
-    "test": "node --test test/"
+    "test": "node --test"
   }
 }
